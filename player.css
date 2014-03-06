@@ -1,0 +1,858 @@
+li.volumeBar, .jp-play, .jp-pause {font-size:85px;width: 100%;height: 100%;text-align: center;text-indent: 0px;}
+li.volumeBar .volume a:after {
+    height: 6px;
+    left: 4px;
+    margin-top: -3px;
+    width: 4px;
+}
+.glyphicon {top:0px}
+#menubar .glyphicon, #menubar li#menu_playTime {text-shadow:3px 0 7px #111111;color:#eeeeee;}
+li.volumeBar .volume a:hover,li.volumeBar .volume a:focus,li.volumeBar .volume a:active {
+   color:#000000;
+   text-decoration: none;
+}
+li.volumeBar .volume a:hover:after,li.volumeBar .volume a:focus:after,li.volumeBar .volume a:active:after {
+    background: none repeat scroll 0 0 #730800;
+}
+li.volumeBar .volume-on:before {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #C55500;
+    border-image: none;
+    border-radius: 0 15px 0 0;
+    border-style: double;
+    border-width: 4px 4px 0 0;
+    height: 6px;
+    left: 15px;
+    margin-top: -5px;
+    transform: rotate(45deg);
+    width: 6px;
+}
+li.volumeBar .volume-on:hover:before {
+    border-color: #730800;
+}
+
+
+body {
+    background: url("http://wrir.org/assets/img/body_bg.gif") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    font-family: 'Open Sans Condensed' !important;
+}
+
+#popup {
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.9);
+    display: none;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 99999;
+}
+#lightbox {
+    height: 100%;
+    left: 0;
+    margin: 100px 5% 5%;
+    position: absolute;
+    top: 0;
+    width: 90%;
+    z-index: 10;
+}
+#details_back {
+    background: none repeat scroll 0 0 #111111;
+    border-radius: 3px;
+    color: #EEEEEE;
+    cursor: pointer;
+    font-size: 20px;
+    left: 10px;
+    padding: 8px;
+    position: fixed;
+    top: 10px;
+    z-index: 9999;
+}
+#sidemenu_container, #timemenu_container {transition: top .5s;-webkit-transition: top .5s;background: #111111;height:100px;position: fixed;top: -100px;width:100%;left:0px;color: #ffffff;z-index: 9;}
+#menubar {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.4);
+    height: auto;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+    transition: top .5s;-webkit-transition: top .5s;
+}
+#menubar li {cursor: pointer;border:2px solid #cccccc;line-height: 121px;}
+#menubar li#menu_donate {font-size: 30px;color: #eeeeee;text-align: center;}
+#listen_live1 {text-shadow:3px 0 10px rgba(0,0,0,.6);}
+#player_container {float:left;margin:0px;height: 125px;overflow: hidden;width:100%;}
+
+li.jp-play, li.jp-pause, li.volumeBar, li#menu_playTime, #listen_live {
+background: rgb(91,91,91);
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzViNWI1YiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjIxJSIgc3RvcC1jb2xvcj0iIzI2MjYyNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijg3JSIgc3RvcC1jb2xvcj0iIzMzMzMzMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijk5JSIgc3RvcC1jb2xvcj0iIzViNWI1YiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+background: -moz-linear-gradient(top,  rgba(91,91,91,1) 0%, rgba(38,38,38,1) 21%, rgba(51,51,51,1) 87%, rgba(91,91,91,1) 99%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(91,91,91,1)), color-stop(21%,rgba(38,38,38,1)), color-stop(87%,rgba(51,51,51,1)), color-stop(99%,rgba(91,91,91,1)));
+background: -webkit-linear-gradient(top,  rgba(91,91,91,1) 0%,rgba(38,38,38,1) 21%,rgba(51,51,51,1) 87%,rgba(91,91,91,1) 99%);
+background: -o-linear-gradient(top,  rgba(91,91,91,1) 0%,rgba(38,38,38,1) 21%,rgba(51,51,51,1) 87%,rgba(91,91,91,1) 99%);
+background: -ms-linear-gradient(top,  rgba(91,91,91,1) 0%,rgba(38,38,38,1) 21%,rgba(51,51,51,1) 87%,rgba(91,91,91,1) 99%);
+background: linear-gradient(to bottom,  rgba(91,91,91,1) 0%,rgba(38,38,38,1) 21%,rgba(51,51,51,1) 87%,rgba(91,91,91,1) 99%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5b5b5b', endColorstr='#5b5b5b',GradientType=0 );
+
+}
+li#menu_donate {background:#cc0000;}
+li#listen_live {background: #ffffff;padding: 10px;}
+li.jp-play:hover, li.jp-pause:hover, li.volumeBar:hover, li#menu_playTime:hover, li#menu_donate:hover, #listen_live:hover {background: rgba(51,51,51, .8)}
+li#menu_playTime {line-height:50px;color: #111111;font-size: 1.5em}
+
+li.jp-pause {display:none;}
+#sideMenu ul {width:8%;margin:0;padding: 0;float: left;}
+#sideMenu ul li {list-style: none;text-align: center;color: #eeeeee;font-size:34px;padding: 0 1%; line-height: 100px;}
+#sideMenu {width:100%;}
+
+#lightbox p img {
+    height: auto !important;
+    width: 100% !important;
+}
+#lightbox a {
+    color: #111111 !important;
+}
+#showlist {
+    color: #EEEEEE;
+}
+.showlist_intro {
+    color: #EEEEEE;
+    font-size: 22px;
+}
+.showlist_header {
+    font-size: 32px;
+    margin-left:.5%;
+    margin-right: .5%;
+    background: #888888;
+    border-radius: 3px;
+    margin-bottom:5px;
+    padding: 5px;
+    color:#222222;
+}
+.show {
+background: rgb(84,84,84);
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzU0NTQ1NCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjE3JSIgc3RvcC1jb2xvcj0iIzMzMzMzMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjkzJSIgc3RvcC1jb2xvcj0iIzMzMzMzMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM1NDU0NTQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(top,  rgba(84,84,84,1) 0%, rgba(51,51,51,1) 17%, rgba(51,51,51,1) 93%, rgba(84,84,84,1) 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(84,84,84,1)), color-stop(17%,rgba(51,51,51,1)), color-stop(93%,rgba(51,51,51,1)), color-stop(100%,rgba(84,84,84,1)));
+background: -webkit-linear-gradient(top,  rgba(84,84,84,1) 0%,rgba(51,51,51,1) 17%,rgba(51,51,51,1) 93%,rgba(84,84,84,1) 100%);
+background: -o-linear-gradient(top,  rgba(84,84,84,1) 0%,rgba(51,51,51,1) 17%,rgba(51,51,51,1) 93%,rgba(84,84,84,1) 100%);
+background: -ms-linear-gradient(top,  rgba(84,84,84,1) 0%,rgba(51,51,51,1) 17%,rgba(51,51,51,1) 93%,rgba(84,84,84,1) 100%);
+background: linear-gradient(to bottom,  rgba(84,84,84,1) 0%,rgba(51,51,51,1) 17%,rgba(51,51,51,1) 93%,rgba(84,84,84,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#545454', endColorstr='#545454',GradientType=0 );
+
+    border-radius: 3px;
+    float: left;
+    height: auto;
+    min-height: 135px;
+    margin: 5px 0.5%;
+    width: 47%;
+    padding: 1%;
+    transition: all 0.8s ease 0s;
+}
+.show:nth-child(even) {float:right;}
+.show_controls {min-height: 100px;position: relative;display: inline;}
+.show_controls div.glyphicon {line-height: 100px;color:#dddddd;}
+.recent_more_button_close, .recent_more_button_close {
+    float: right;
+}
+.show_image {float: left;margin-right: 8px;overflow: hidden;border-radius: 3px;height: 112px;width: 112px;}
+.show_image img {width: 112px;height: auto;}
+.show_image img {
+    border-radius: 3px;
+}
+
+.show_dj {font-size:32px;line-height: 34px;}
+.show_date, .show_title {font-size:24px;font-style: italic;}
+.show_date, .show_title, .show_page {display: inline-block;font-style: italic;}
+.play_button, .more_button {float:right;cursor:pointer;}
+.more_button div, .play_button div {background:transparent;font-size: 4em;margin: 0 5px;}
+.play_button {margin-left:15px;}
+.show_mp3, .show_page {float:right;}
+.show_mp3, .recent_more_button, .recent_more_button_close,.recent_more_button_close_top  {
+    cursor: pointer;
+}
+.recent_more_button, .recent_more_button_close, .recent_more_button_close_top {margin-top: 5px;float: right;}
+.recent_more_button_close {transform:rotate(-90deg);}
+.recent_more_button_close_top {transform:rotate(90deg);}
+
+.recent_more_button,.recent_more_button_close_top {float:right;margin: 0px;font-size: 25px;}
+.show_page {margin-top:8px;margin-right:8px;cursor:pointer; text-indent:-9999px;font-size: 30px; /* This controls the size. */ display: inline-block; width: 0.4em; height: 0.4em; border: 0.1em solid #dddddd; position: relative; border-radius: 0.35em; } 
+.show_page::before { content: ""; display: inline-block; position: absolute; right: -0.25em; bottom: -0.1em; border-width: 0; background: #dddddd; width: 0.35em; height: 0.08em; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); } 
+.show_page:hover, .show_page:hover::before {border-color: #cc0000;}
+.recent_blog_entries {display:none;margin-bottom:10px;padding-bottom:20px;} 
+h3.recent_blog_header {display:inline;margin-right: 20px;}
+.recent_button, .recent_button_close {background: #888888;border-radius: 3px;padding:20px 15px;cursor: pointer;margin-top: 50px;}
+.recent_button_close,.recent_more_button_close,.recent_more_button_close_top  {display:none;float: right;}
+.block p.nav {display:none;}
+.block p {margin:0 0 8px 0;}
+.block h3, .block h4 {margin:8px 0;clear: both;}
+.block p span {font-size: 16px !important;color:#eeeeee !important;}
+.block > img {float:right;margin:-89px 3px 0 0;border-radius: 3px;display: none;}
+.block .recent_blog_entries img {max-width:100%;}
+.block .recent_blog_entries h4 {border-bottom:1px solid #555555;font-size: 22px;}
+.block .recent_blog_entries a {text-decoration:none;}
+.block h5.dj {margin:0 0 8px 0;}
+.readmore_tunein {display:block;}
+.readmore_show{display:none;}
+img.loading {display:none;float:right;height:21px;margin:-4px;}
+
+#call {
+    background: url("http://wrir.org/tunein/call.gif") no-repeat scroll 0 0 #D9282F;
+    border-radius: 20px;
+    height: 250px;
+    margin: 20px 0 0 5px;
+    width: 97%;
+}
+#donate {
+    background: none repeat scroll 0 0 #D9282F;
+    border-radius: 20px;
+    font-size: 32px;
+    height: 70px;
+    margin: 20px 0 0 5px;
+    padding: 180px 0 0 20px;
+    width: 95%;
+}
+.players {
+}
+a {
+    color: #FFFFFF;
+}
+h2 {
+    color: #FFFFFF;
+    font-size: 28px;
+    margin-top: 25px;
+    text-align: left;
+}
+#player_poster {
+    position: relative;
+    margin: 5px;
+    top: -80px;
+    left:380px;
+}
+#player_info {float:left;max-width:100%;}
+#player_poster img {
+    border-radius: 3px;
+}
+#player_description {
+    color: #111111;
+    font-size: 18px;
+    line-height:21px;
+    margin:8px;
+    //clear: left;
+}
+#player_description a {
+    color: #CC0000;
+}
+#player_showtitle {
+    color: #111111;
+    font-size: 32px;
+    line-height: 30px;
+    margin: 8px;
+    //clear: left;
+}
+
+#show_details {
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.8);
+    float: left;
+    margin: 0;
+    min-height: 125px;
+    width: 100%;
+    padding:0;
+    border-bottom: 10px solid rgba(0,0,0, .6);
+}
+#listen_live {
+    float: left;
+    font-size: 1.5em;
+    vertical-align: middle;
+    width: 20%;
+    border-radius: 3px;
+    color: #111111;
+    cursor: pointer;
+    text-align: left;
+    height:125px;
+    line-height: 1.25em;
+
+}
+#timeMenu {width:60%;margin:auto;float: left;}
+#listen_live:hover {background: #dddddd}
+#play_1 {width:70px;height: 70px;border-radius: 50%;background: #000000;padding:10px;margin: 20px auto;}
+#play_2 {    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #ffffff;
+    border-image: none;
+    border-style: solid;
+    border-width: 25px 34px;
+    left: 30%;
+text-indent: -9999px;line-height: 0;margin:10px 22px;}
+
+div.jp-audio, div.jp-audio-stream, div.jp-video {
+    background-color: rgba(0, 0, 0, 0);
+    color: ##ffffff;
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 1.25em;
+    line-height: 1.6;
+}
+div.jp-audio {
+    margin: 0;
+    width: 100%;
+}
+div.jp-audio-stream {
+    width: 182px;
+}
+div.jp-video-270p {
+    width: 480px;
+}
+div.jp-video-360p {
+    width: 640px;
+}
+div.jp-video-full {
+    height: 270px;
+    position: static !important;
+    width: 480px;
+}
+div.jp-video-full div div {
+    z-index: 1000;
+}
+div.jp-video-full div.jp-jplayer {
+    left: 0;
+    overflow: hidden;
+    position: fixed !important;
+    top: 0;
+}
+div.jp-video-full div.jp-gui {
+    height: 100%;
+    left: 0;
+    position: fixed !important;
+    top: 0;
+    width: 100%;
+    z-index: 1001;
+}
+div.jp-video-full div.jp-interface {
+    bottom: 0;
+    left: 0;
+    position: absolute !important;
+}
+div.jp-interface {
+    background-color: rgba(0, 0, 0, 0);
+    position: relative;
+    width: 100%;
+}
+div.jp-audio div.jp-type-single div.jp-interface {
+    height: auto;
+}
+div.jp-audio div.jp-type-playlist div.jp-interface {
+    height: 80px;
+}
+div.jp-audio-stream div.jp-type-single div.jp-interface {
+    height: 80px;
+}
+div.jp-video div.jp-interface {
+    border-top: 1px solid #009BE3;
+}
+div.jp-controls-holder {
+    clear: both;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    top: -8px;
+    width: 440px;
+}
+div.jp-interface ul.jp-controls {
+    list-style-type: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
+div.jp-audio ul.jp-controls {
+    background: transparent;
+    padding: 0px;
+    width: 100%;
+    margin-right: 0px;
+}
+div.jp-audio-stream ul.jp-controls {
+    padding: 20px 20px 0;
+    width: 142px;
+}
+div.jp-video div.jp-type-single ul.jp-controls {
+    margin-left: 200px;
+    width: 78px;
+}
+div.jp-video div.jp-type-playlist ul.jp-controls {
+    margin-left: 172px;
+    width: 134px;
+}
+div.jp-video ul.jp-controls, div.jp-interface ul.jp-controls li {
+    display: inline;
+    float: left;
+    width:20% !important;
+    padding: 0px;
+    margin: 0px;
+    height: 125px;
+}
+div.jp-interface ul.jp-controls a {
+    display: block;
+    overflow: hidden;
+}
+a.jp-play, a.jp-pause {
+    height: 40px;
+    width: 40px;
+}
+a.jp-play {
+    border-bottom: 20px solid rgba(0, 0, 0, 0);
+    border-left: 40px solid #222222;
+    border-top: 20px solid rgba(0, 0, 0, 0);
+    height: 0;
+    width: 0;
+}
+a.jp-play:hover {
+    border-left-color: #cc0000;
+}
+a.jp-pause-test:before {
+ width: 10px;
+height: 60px;
+background: black;
+position: absolute;
+content: "";
+top: 10px;
+left: 25px;
+}
+a.jp-pause {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll 0 -42px rgba(0, 0, 0, 0);
+    display: none;
+}
+a.jp-pause:hover {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll -41px -42px rgba(0, 0, 0, 0);
+}
+a.jp-stop, a.jp-previous, a.jp-next {
+    height: 28px;
+    margin-top: 6px;
+    width: 28px;
+}
+a.jp-stop {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll 0 -83px rgba(0, 0, 0, 0);
+    margin-left: 10px;
+}
+a.jp-stop:hover {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll -29px -83px rgba(0, 0, 0, 0);
+}
+a.jp-previous {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll 0 -112px rgba(0, 0, 0, 0);
+}
+a.jp-previous:hover {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll -29px -112px rgba(0, 0, 0, 0);
+}
+a.jp-next {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll 0 -141px rgba(0, 0, 0, 0);
+}
+a.jp-next:hover {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll -29px -141px rgba(0, 0, 0, 0);
+}
+div.jp-progress {
+    background-color: #DDDDDD;
+    overflow: hidden;
+    height: 60px;
+    margin:20px auto;
+    border-radius: 3px;
+}
+div.jp-audio div.jp-progress {
+    height: 15px;
+    position: absolute;
+    top: 32px;
+}
+div.jp-audio div.jp-type-single div.jp-progress {
+    left: 110px;
+    width: 186px;
+}
+div.jp-audio div.jp-type-playlist div.jp-progress {
+    left: 166px;
+    width: 130px;
+}
+div.jp-video div.jp-progress {
+    height: 10px;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+div.jp-seek-bar {
+    background: #999999;
+    cursor: pointer;
+    height: 100%;
+    width: 0;
+}
+div.jp-play-bar {
+    background: #eeeeee;
+    height: 100%;
+    width: 0;
+        border-right: 2px solid #CC0000;
+}
+div.jp-seeking-bg {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.seeking.gif") repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+a.jp-mute, a.jp-unmute, a.jp-volume-max {
+    font-size: 60px;
+    line-height: 100px;
+}
+div.jp-audio div.jp-type-single a.jp-mute, div.jp-audio div.jp-type-single a.jp-unmute {
+    margin-left: 210px;
+}
+div.jp-audio div.jp-type-playlist a.jp-mute, div.jp-audio div.jp-type-playlist a.jp-unmute {
+    margin-left: 154px;
+}
+div.jp-audio-stream div.jp-type-single a.jp-mute, div.jp-audio-stream div.jp-type-single a.jp-unmute {
+    margin-left: 10px;
+}
+div.jp-audio a.jp-volume-max, div.jp-audio-stream a.jp-volume-max {
+    margin-left: 56px;
+}
+div.jp-video a.jp-mute, div.jp-video a.jp-unmute, div.jp-video a.jp-volume-max {
+    margin-top: 0;
+    position: absolute;
+    top: 12px;
+}
+div.jp-video a.jp-mute, div.jp-video a.jp-unmute {
+    left: 50px;
+}
+div.jp-video a.jp-volume-max {
+    left: 134px;
+}
+a.jp-mute {
+    margin-left: .5%;
+}
+a.jp-mute:hover {
+    text-decoration: none;
+    color:#cc0000;
+}
+a.jp-unmute {
+    display: none;
+}
+a.jp-unmute:hover {
+    text-decoration: none;
+    color:#cc0000;
+}
+a.jp-volume-max {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll 0 -186px rgba(0, 0, 0, 0);
+}
+a.jp-volume-max:hover {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll -19px -186px rgba(0, 0, 0, 0);
+}
+div.jp-volume-bar {
+    background: #aaaaaa;
+    cursor: pointer;
+    height: 60px;
+    overflow: hidden;
+    position: relative;
+    width: 88%;
+    margin: 20px 2%;
+    float: right;
+}
+div.jp-audio div.jp-volume-bar {
+    left: 322px;
+    top: 37px;
+}
+div.jp-audio-stream div.jp-volume-bar {
+    left: 92px;
+    top: 37px;
+}
+div.jp-video div.jp-volume-bar {
+    left: 72px;
+    top: 17px;
+}
+div.jp-volume-bar-value {
+    background: #eeeeee;
+    height: 60px;
+    width: 0;
+    border-right: 2px solid #CC0000;
+}
+div.jp-audio div.jp-time-holder {
+    position: absolute;
+}
+div.jp-audio div.jp-type-single div.jp-time-holder {
+    width: 20%;
+    text-align: center;
+}
+div.jp-audio div.jp-type-playlist div.jp-time-holder {
+    left: 166px;
+    width: 130px;
+}
+div.jp-current-time, div.jp-duration {
+    font-size: 50px;
+    text-align: center;
+    font-style: oblique;
+    width: 20%;
+    line-height: 100px;
+    float: left;
+}
+#menubar .jp-current-time, #menubar .jp-duration {
+    font-size: 24px;
+    text-align: center;
+    font-style: oblique;
+    width: 100%;
+    line-height: 60px;
+    float: left;
+}
+div.jp-current-time {
+}
+div.jp-duration {
+    float: right;
+}
+div.jp-video div.jp-current-time {
+}
+div.jp-video div.jp-duration {
+}
+div.jp-title {
+    font-weight: bold;
+    text-align: center;
+}
+div.jp-title, div.jp-playlist {
+    background-color: #CCCCCC;
+    border-top: 1px solid #009BE3;
+    width: 100%;
+}
+div.jp-type-single div.jp-title, div.jp-type-playlist div.jp-title, div.jp-type-single div.jp-playlist {
+    border-top: medium none;
+}
+div.jp-title ul, div.jp-playlist ul {
+    font-size: 0.72em;
+    list-style-type: none;
+    margin: 0;
+    padding: 0 20px;
+}
+div.jp-title li {
+    font-weight: bold;
+    padding: 5px 0;
+}
+div.jp-playlist li {
+    border-bottom: 1px solid #EEEEEE;
+    padding: 5px 0 4px 20px;
+}
+div.jp-playlist li div {
+    display: inline;
+}
+div.jp-type-playlist div.jp-playlist li:last-child {
+    border-bottom: medium none;
+    padding: 5px 0 5px 20px;
+}
+div.jp-type-playlist div.jp-playlist li.jp-playlist-current {
+    list-style-position: inside;
+    list-style-type: square;
+    padding-left: 7px;
+}
+div.jp-type-playlist div.jp-playlist a {
+    color: #333333;
+    text-decoration: none;
+}
+div.jp-type-playlist div.jp-playlist a:hover {
+    color: #0D88C1;
+}
+div.jp-type-playlist div.jp-playlist a.jp-playlist-current {
+    color: #0D88C1;
+}
+div.jp-type-playlist div.jp-playlist a.jp-playlist-item-remove {
+    color: #666666;
+    display: inline;
+    float: right;
+    font-weight: bold;
+    margin-right: 10px;
+    text-align: right;
+}
+div.jp-type-playlist div.jp-playlist a.jp-playlist-item-remove:hover {
+    color: #0D88C1;
+}
+div.jp-type-playlist div.jp-playlist span.jp-free-media {
+    display: inline;
+    float: right;
+    margin-right: 10px;
+    text-align: right;
+}
+div.jp-type-playlist div.jp-playlist span.jp-free-media a {
+    color: #666666;
+}
+div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover {
+    color: #0D88C1;
+}
+span.jp-artist {
+    color: #666666;
+    font-size: 0.8em;
+}
+div.jp-video-play {
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    overflow: hidden;
+    width: 100%;
+}
+div.jp-video-270p div.jp-video-play {
+    height: 270px;
+    margin-top: -270px;
+}
+div.jp-video-360p div.jp-video-play {
+    height: 360px;
+    margin-top: -360px;
+}
+div.jp-video-full div.jp-video-play {
+    height: 100%;
+}
+a.jp-video-play-icon {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.video.play.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: block;
+    height: 100px;
+    left: 50%;
+    margin-left: -56px;
+    margin-top: -50px;
+    position: relative;
+    text-indent: -9999px;
+    top: 50%;
+    width: 112px;
+}
+div.jp-video-play:hover a.jp-video-play-icon {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.video.play.png") no-repeat scroll 0 -100px rgba(0, 0, 0, 0);
+}
+div.jp-jplayer audio, div.jp-jplayer {
+    height: 0;
+    width: 0;
+}
+div.jp-jplayer {
+    background-color: #000000;
+}
+ul.jp-toggles {
+    list-style-type: none;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 0;
+}
+div.jp-audio .jp-type-single ul.jp-toggles {
+    width: 25px;
+}
+div.jp-audio .jp-type-playlist ul.jp-toggles {
+    left: 325px;
+    margin: 0;
+    position: absolute;
+    top: 50px;
+    width: 55px;
+}
+div.jp-video ul.jp-toggles {
+    margin-top: 10px;
+    width: 100px;
+}
+ul.jp-toggles li {
+    display: block;
+    float: right;
+}
+ul.jp-toggles li a {
+    display: block;
+    height: 18px;
+    line-height: 100%;
+    text-indent: -9999px;
+    width: 25px;
+}
+a.jp-full-screen {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll 0 -310px rgba(0, 0, 0, 0);
+    margin-left: 20px;
+}
+a.jp-full-screen:hover {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll -30px -310px rgba(0, 0, 0, 0);
+}
+a.jp-restore-screen {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll -60px -310px rgba(0, 0, 0, 0);
+    margin-left: 20px;
+}
+a.jp-restore-screen:hover {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll -90px -310px rgba(0, 0, 0, 0);
+}
+a.jp-repeat {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll 0 -290px rgba(0, 0, 0, 0);
+}
+a.jp-repeat:hover {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll -30px -290px rgba(0, 0, 0, 0);
+}
+a.jp-repeat-off {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll -60px -290px rgba(0, 0, 0, 0);
+}
+a.jp-repeat-off:hover {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll -90px -290px rgba(0, 0, 0, 0);
+}
+a.jp-shuffle {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll 0 -270px rgba(0, 0, 0, 0);
+    margin-left: 5px;
+}
+a.jp-shuffle:hover {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll -30px -270px rgba(0, 0, 0, 0);
+}
+a.jp-shuffle-off {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll -60px -270px rgba(0, 0, 0, 0);
+    margin-left: 5px;
+}
+a.jp-shuffle-off:hover {
+    background: url("http://wrir.org/tunein/jplayer.blue.monday.jpg") no-repeat scroll -90px -270px rgba(0, 0, 0, 0);
+}
+.jp-no-solution {
+    background-color: #EEEEEE;
+    border: 2px solid #009BE3;
+    color: #000000;
+    display: none;
+    font-size: 0.8em;
+    padding: 5px;
+}
+.jp-no-solution a {
+    color: #000000;
+}
+.jp-no-solution span {
+    display: block;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+}
+@media screen and (max-device-width: 767px), screen and (max-width: 767px) {
+#menubar1 {
+    position: relative;
+}
+#player_showtitle {
+    font-size: 46px;
+    line-height: 42px;
+}
+#player_description {
+    font-size: 24px;
+    line-height: 28px;
+}
+#showlist {
+    margin-top: 10px;
+}
+h2.showlist_header {
+    margin-top: 10px;
+    padding: 5px;
+}
+}
+@media screen and (max-device-width: 767px), screen and (max-width: 767px) {
+.show {
+    width: 99%;margin:5px .5%;
+}
+.show_dj {font-size:36px;line-height:34px;}
+
+.show_page {font-size:72px;margin-right: 15px;margin-top:18px;}
+.block h3, .block h4,.block h5.dj, .recent_blog_entries p, .recent_blog_entries b {font-size:34px !important;font-family: 'Open Sans Condensed' !important;font-weight: bold !important;}
+.block p span, .block p {font-size:32px !important;font-family: 'Open Sans Condensed' !important;}
+.recent_more_button, .recent_more_button_close_top {font-size: 34px;}
+.show_mp31 {
+    border-bottom: 25px solid rgba(0, 0, 0, 0);
+    border-left: 35px solid #222222;
+    border-top: 25px solid rgba(0, 0, 0, 0);
+}
+.play_button, .more_button {width:63px;margin:0 5px;}
+.play_button {margin-left:25px;}
+.more_button {margin-left: 10px;}
+
+div.jp-audio {margin:0;}
+div.jp-audio ul.jp-controls {margin-right:0;}
+#show_details {width: 100%;}
+
+}
+@media screen and (max-device-width: 767px), screen and (max-width: 767px) {}
+
